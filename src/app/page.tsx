@@ -1,9 +1,8 @@
+import ImageInput from "@/components/image-input";
+import { ImageProvider } from "@/providers/image-provider";
+
 const Home = () => {
-  return (
-    <main>
-      <h2>Catalyst Pulse</h2>
-    </main>
-  );
+  return <ImageInput />;
 };
 
 export default Home;
