@@ -29,6 +29,7 @@ export const ImageInputMain = () => {
           type="file"
           onChange={addImages}
           multiple
+          accept="image/*"
           className="hidden"
         />
       </section>
