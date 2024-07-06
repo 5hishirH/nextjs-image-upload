@@ -1,10 +1,21 @@
 "use client";
 
-import { createContext, useState, ReactNode, ChangeEvent } from "react";
+import {
+  createContext,
+  useState,
+  ReactNode,
+  ChangeEvent,
+  useRef,
+  RefObject,
+} from "react";
 
 // Define the shape of the context data
 interface ImageContextType {
   images: { url: string; file: File }[];
+  setImages: React.Dispatch<
+    React.SetStateAction<{ url: string; file: File }[]>
+  >;
+  addImageRef: RefObject<HTMLInputElement>;
   addImages: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -19,6 +30,7 @@ interface ImageProviderProps {
 
 export const ImageProvider = ({ children }: ImageProviderProps) => {
   const [images, setImages] = useState<{ url: string; file: File }[]>([]);
+  const addImageRef = useRef<HTMLInputElement>(null);
 
   const addImages = (e: ChangeEvent<HTMLInputElement>) => {
     const files: FileList | null = e.target.files;
@@ -30,10 +42,14 @@ export const ImageProvider = ({ children }: ImageProviderProps) => {
     }));
 
     setImages((prevImgs) => [...prevImgs, ...newImages]);
+
+    if (addImageRef.current) addImageRef.current.value = "";
   };
 
   const providerValue = {
     images,
+    setImages,
+    addImageRef,
     addImages,
   };
 
